@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://big-walk-wiki-dse.pages.dev/sitemap-index.xml
