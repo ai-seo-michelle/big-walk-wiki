@@ -2,120 +2,58 @@
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { mapMarkers } from "../../data/mapMarkers";
+import { mapPage } from "../../data/mapPage";
 
 const entry = await getEntry("pages", "map");
 
 if (!entry) {
   throw new Error("Missing map content entry.");
 }
-
-const verifiedPoints = [
-  "Big Walk focuses on exploration.",
-  "Navigation help is a reasonable player need during exploration.",
-  "Complete interactive map data is not available yet."
-];
-
-const futureFeatures = [
-  {
-    title: "Location Markers",
-    text: "Future verified markers can group important areas, puzzle locations, discovery points, and useful tools."
-  },
-  {
-    title: "Player Notes",
-    text: "Community notes can document routes, tips, and discoveries after they are checked against reliable sources."
-  },
-  {
-    title: "Search Function",
-    text: "A future search tool can help players find verified locations, areas, and puzzle points."
-  }
-];
-
-const markerCategories = [
-  "Important Areas",
-  "Puzzle Locations",
-  "Discovery Points",
-  "Useful Tools"
-];
-
-const explorationTips = [
-  {
-    title: "Explore Together",
-    text: "Move with teammates when entering unfamiliar areas so discoveries can be shared and checked."
-  },
-  {
-    title: "Record What You Find",
-    text: "When the community database opens, useful submissions should describe what was found and how it was verified."
-  },
-  {
-    title: "Share Locations Carefully",
-    text: "Avoid treating a single clip or memory as confirmed map data until multiple reliable sources support it."
-  }
-];
-
-const unavailableItems = [
-  "Official interactive map",
-  "Complete location database",
-  "Confirmed map markers",
-  "Verified hidden area list"
-];
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonicalPath="/map/">
   <main class="page-shell guide-page">
     <section class="page-hero guide-hero" aria-labelledby="map-title">
       <div>
-        <p class="eyebrow">Big Walk Map</p>
-        <h1 id="map-title">Big Walk Interactive Map</h1>
-        <p class="lede">
-          A verified-first map hub for Big Walk exploration. The interactive map
-          framework is prepared for future community data, but this page does not
-          publish unverified locations, coordinates, or markers.
-        </p>
+        <p class="eyebrow">{mapPage.hero.eyebrow}</p>
+        <h1 id="map-title">{mapPage.hero.title}</h1>
+        <p class="lede">{mapPage.hero.description}</p>
       </div>
 
-      <aside class="source-card" aria-label="Map source status">
-        <p class="eyebrow">Source Status</p>
-        <h2>Verified for This Page</h2>
+      <aside class="source-card" aria-label={mapPage.source.ariaLabel}>
+        <p class="eyebrow">{mapPage.source.eyebrow}</p>
+        <h2>{mapPage.source.title}</h2>
         <ul>
-          {verifiedPoints.map((point) => <li>{point}</li>)}
+          {mapPage.source.verifiedPoints.map((point) => <li>{point}</li>)}
         </ul>
       </aside>
     </section>
 
     <section class="guide-section" aria-labelledby="map-introduction">
       <div class="section-heading">
-        <p class="eyebrow">Overview</p>
-        <h2 id="map-introduction">Big Walk Map Introduction</h2>
+        <p class="eyebrow">{mapPage.overview.eyebrow}</p>
+        <h2 id="map-introduction">{mapPage.overview.title}</h2>
       </div>
       <div class="guide-panel">
-        <p>
-          Big Walk is built around exploration, discovery, and cooperative play.
-          A map resource can help players organize useful information once reliable
-          location data becomes available.
-        </p>
-        <p>
-          Current sources do not provide a complete official interactive map or a
-          verified location database. For that reason, this wiki keeps the map
-          structure ready without inventing coordinates or place names.
-        </p>
+        {mapPage.overview.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </section>
 
     <section class="guide-section" aria-labelledby="interactive-map-status">
       <div class="section-heading">
-        <p class="eyebrow">Interactive Tool</p>
-        <h2 id="interactive-map-status">Interactive Map Status</h2>
+        <p class="eyebrow">{mapPage.interactive.eyebrow}</p>
+        <h2 id="interactive-map-status">{mapPage.interactive.title}</h2>
       </div>
-      <div class="map-placeholder" role="group" aria-label="Interactive map placeholder">
+      <div class="map-placeholder" role="group" aria-label={mapPage.interactive.placeholderLabel}>
         <div class="map-grid-area">
-          <p class="eyebrow">Verified Markers</p>
+          <p class="eyebrow">{mapPage.interactive.markersEyebrow}</p>
           <strong>{mapMarkers.length}</strong>
-          <span>No confirmed Big Walk map markers are published yet.</span>
+          <span>{mapPage.interactive.markerSummary}</span>
         </div>
         <div class="map-sidebar">
-          <h3>Future Marker Categories</h3>
+          <h3>{mapPage.interactive.categoriesTitle}</h3>
           <ul>
-            {markerCategories.map((category) => <li>{category}</li>)}
+            {mapPage.interactive.markerCategories.map((category) => <li>{category}</li>)}
           </ul>
         </div>
       </div>
@@ -123,16 +61,13 @@ const unavailableItems = [
 
     <section class="guide-section two-column-section" aria-labelledby="map-features">
       <div>
-        <p class="eyebrow">Future Features</p>
-        <h2 id="map-features">Interactive Map Features</h2>
-        <p class="section-copy">
-          These features describe the planned structure for verified map data, not
-          a claim that complete location data is already available.
-        </p>
+        <p class="eyebrow">{mapPage.features.eyebrow}</p>
+        <h2 id="map-features">{mapPage.features.title}</h2>
+        <p class="section-copy">{mapPage.features.text}</p>
       </div>
       <div class="tip-grid">
         {
-          futureFeatures.map((feature) => (
+          mapPage.features.items.map((feature) => (
             <article class="tip-card">
               <h3>{feature.title}</h3>
               <p>{feature.text}</p>
@@ -144,12 +79,12 @@ const unavailableItems = [
 
     <section class="guide-section" aria-labelledby="exploration-guide">
       <div class="section-heading">
-        <p class="eyebrow">Exploration</p>
-        <h2 id="exploration-guide">Exploration Tips</h2>
+        <p class="eyebrow">{mapPage.exploration.eyebrow}</p>
+        <h2 id="exploration-guide">{mapPage.exploration.title}</h2>
       </div>
       <div class="step-list">
         {
-          explorationTips.map((tip, index) => (
+          mapPage.exploration.tips.map((tip, index) => (
             <article class="step-card">
               <span class="card-number">{index + 1}</span>
               <div>
@@ -164,12 +99,12 @@ const unavailableItems = [
 
     <section class="guide-section" aria-labelledby="community-discoveries">
       <div class="section-heading">
-        <p class="eyebrow">Community Data</p>
-        <h2 id="community-discoveries">What Still Needs Verification?</h2>
+        <p class="eyebrow">{mapPage.community.eyebrow}</p>
+        <h2 id="community-discoveries">{mapPage.community.title}</h2>
       </div>
       <div class="mistake-grid">
         {
-          unavailableItems.map((item) => (
+          mapPage.community.items.map((item) => (
             <article class="mistake-card">
               <p>{item}</p>
             </article>
@@ -180,14 +115,10 @@ const unavailableItems = [
 
     <section class="guide-note" aria-labelledby="map-limitations">
       <div>
-        <p class="eyebrow">Wiki Note</p>
-        <h2 id="map-limitations">No Fake Locations or Coordinates</h2>
+        <p class="eyebrow">{mapPage.note.eyebrow}</p>
+        <h2 id="map-limitations">{mapPage.note.title}</h2>
       </div>
-      <p>
-        This page intentionally avoids fake locations, fake coordinates, and fake
-        map markers. Future map entries should be based on official information,
-        verified exploration videos, or carefully checked community discoveries.
-      </p>
+      <p>{mapPage.note.text}</p>
     </section>
   </main>
 </BaseLayout>

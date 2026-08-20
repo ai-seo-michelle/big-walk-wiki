@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { siteConfig } from "../../data/site";
 
 export async function getStaticPaths() {
   const pages = await getCollection("pages");
@@ -28,7 +29,7 @@ const { Content } = await render(page);
 
 <section>
 <p class="text-sm text-green-700">
-BIG WALK GUIDE
+{siteConfig.detailPageEyebrow}
 </p>
 
 <h1 class="text-5xl font-bold mt-4">

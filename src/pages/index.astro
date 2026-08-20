@@ -1,88 +1,41 @@
 ---
 import { getEntry } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { homePage } from "../data/home";
 
 const entry = await getEntry("pages", "home");
 
 if (!entry) {
   throw new Error("Missing home content entry.");
 }
-
-const heroStats = [
-  "Launched 2026",
-  "Developer: House House",
-  "2-12 Player Cooperative",
-  "Steam + PS5 + Switch 2",
-  "Adventure Puzzle Game"
-];
-
-const startCards = [
-  {
-    number: "1",
-    title: "Beginner Guide",
-    description: "Learn the basic gameplay, controls, and first steps for exploring Big Walk.",
-    href: "/guide/"
-  },
-  {
-    number: "2",
-    title: "Multiplayer Guide",
-    description: "Learn how cooperative gameplay works and how to play with friends.",
-    href: "/multiplayer/"
-  },
-  {
-    number: "3",
-    title: "Puzzle Solutions",
-    description: "Find solutions and tips for solving challenges during your adventure.",
-    href: "/puzzle-solutions/"
-  },
-  {
-    number: "4",
-    title: "World Exploration",
-    description: "Discover locations, hidden areas, and exploration tips.",
-    href: "/map/"
-  }
-];
-
-const aboutStats = [
-  { label: "Developer", value: "House House" },
-  { label: "Publisher", value: "Panic" },
-  { label: "Platform", value: "Steam, PlayStation 5, Nintendo Switch 2" },
-  { label: "Genre", value: "Cooperative Adventure Puzzle" },
-  { label: "Players", value: "2-12 Players" },
-  { label: "Core Feature", value: "Communication and Teamwork" }
-];
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonicalPath="/">
   <main class="home-shell">
     <section class="home-hero" aria-labelledby="home-title">
       <div class="hero-copy">
-        <p class="eyebrow">Fan-Made Community Wiki</p>
-        <h1 id="home-title" class="home-title">Big Walk</h1>
-        <p class="home-lede">
-          Big Walk is a cooperative multiplayer adventure game about teamwork,
-          communication, and exploration. Explore the world with friends,
-          solve puzzles together, and discover new ways to interact.
-        </p>
-        <div class="hero-actions" aria-label="Featured Big Walk guides">
-          <a class="button button-primary" href="/guide/">Start Beginner Guide</a>
-          <a class="button button-secondary" href="/multiplayer/">Explore Multiplayer</a>
-          <a class="button button-ghost" href="/puzzle-solutions/">Solve Puzzles</a>
+        <p class="eyebrow">{homePage.hero.eyebrow}</p>
+        <h1 id="home-title" class="home-title">{homePage.hero.title}</h1>
+        <p class="home-lede">{homePage.hero.description}</p>
+        <div class="hero-actions" aria-label={homePage.hero.actionsLabel}>
+          <a class="button button-primary" href={homePage.hero.primaryAction.href}>{homePage.hero.primaryAction.label}</a>
+          <a class="button button-secondary" href={homePage.hero.secondaryAction.href}>{homePage.hero.secondaryAction.label}</a>
+          <a class="button button-ghost" href={homePage.hero.tertiaryAction.href}>{homePage.hero.tertiaryAction.label}</a>
         </div>
-        <ul class="hero-stats" aria-label="Big Walk quick facts">
-          {heroStats.map((stat) => <li>{stat}</li>)}
+        <ul class="hero-stats" aria-label={homePage.hero.statsLabel}>
+          {homePage.hero.stats.map((stat) => <li>{stat}</li>)}
         </ul>
       </div>
 
-      <aside class="hero-media" aria-label="Official media">
+      <aside class="hero-media" aria-label={homePage.media.ariaLabel}>
         <div class="media-heading">
-          <p class="eyebrow">Official media</p>
-          <h2>Gameplay trailer</h2>
+          <p class="eyebrow">{homePage.media.eyebrow}</p>
+          <h2>{homePage.media.title}</h2>
         </div>
         <div class="video-frame">
           <iframe
-            src="https://www.youtube.com/embed/_n7e0hWmTvc"
-            title="Big Walk official gameplay trailer"
+            src={homePage.media.src}
+            title={homePage.media.iframeTitle}
             loading="lazy"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
             allowfullscreen
@@ -93,12 +46,12 @@ const aboutStats = [
 
     <section class="home-section" aria-labelledby="start-title">
       <div class="section-heading">
-        <p class="eyebrow">Start Here</p>
-        <h2 id="start-title">Your Big Walk Journey</h2>
+        <p class="eyebrow">{homePage.start.eyebrow}</p>
+        <h2 id="start-title">{homePage.start.title}</h2>
       </div>
       <div class="start-grid">
         {
-          startCards.map((card) => (
+          homePage.start.cards.map((card) => (
             <a class="start-card" href={card.href}>
               <span class="card-number">{card.number}</span>
               <h3>{card.title}</h3>
@@ -111,23 +64,15 @@ const aboutStats = [
 
     <section class="about-section" aria-labelledby="about-title">
       <div class="about-copy">
-        <p class="eyebrow">About Game</p>
-        <h2 id="about-title">What is Big Walk?</h2>
-        <p>
-          Big Walk is a cooperative multiplayer adventure game developed by House House,
-          the creators of Untitled Goose Game. Players explore a large open world together
-          while solving puzzles and completing challenges.
-        </p>
-        <p>
-          The game focuses on communication and teamwork. Players use voice chat, tools,
-          and creative solutions to navigate the world and create memorable moments with friends.
-        </p>
-        <a class="button button-secondary" href="/guide/">Explore All Guides</a>
+        <p class="eyebrow">{homePage.about.eyebrow}</p>
+        <h2 id="about-title">{homePage.about.title}</h2>
+        {homePage.about.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+        <a class="button button-secondary" href={homePage.about.action.href}>{homePage.about.action.label}</a>
       </div>
 
       <dl class="about-stats">
         {
-          aboutStats.map((item) => (
+          homePage.about.stats.map((item) => (
             <div>
               <dt>{item.label}</dt>
               <dd>{item.value}</dd>
@@ -139,16 +84,13 @@ const aboutStats = [
 
     <section class="final-cta" aria-labelledby="final-cta-title">
       <div>
-        <p class="eyebrow">Community Guide Hub</p>
-        <h2 id="final-cta-title">Ready to Master Big Walk?</h2>
-        <p>
-          From your first adventure to solving difficult puzzles with friends, our Big Walk
-          wiki provides guides, tips, and useful information.
-        </p>
+        <p class="eyebrow">{homePage.cta.eyebrow}</p>
+        <h2 id="final-cta-title">{homePage.cta.title}</h2>
+        <p>{homePage.cta.text}</p>
       </div>
       <div class="final-actions">
-        <a class="button button-primary" href="/guide/">Read the Beginner Guide</a>
-        <a class="button button-secondary" href="https://store.steampowered.com/app/1478500/Big_Walk/">Play Big Walk</a>
+        <a class="button button-primary" href={homePage.cta.primaryAction.href}>{homePage.cta.primaryAction.label}</a>
+        <a class="button button-secondary" href={homePage.cta.secondaryAction.href}>{homePage.cta.secondaryAction.label}</a>
       </div>
     </section>
   </main>

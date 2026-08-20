@@ -20,13 +20,17 @@ const currentPath = Astro.url.pathname;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-KGT9DBWCZ1"></script>
-<script is:inline>
+<script
+  is:inline
+  async
+  src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.analyticsId}`}
+></script>
+
+<script is:inline define:vars={{ analyticsId: siteConfig.analyticsId }}>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
-  gtag('config', 'G-KGT9DBWCZ1');
+  gtag('config', analyticsId);
 </script>
     <title>{title}</title>
     <meta name="description" content={description} />
@@ -37,8 +41,8 @@ const currentPath = Astro.url.pathname;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <meta name="msapplication-config" content="/browserconfig.xml" />
-    <meta name="msapplication-TileColor" content="#0f3d2e" />
-    <meta name="theme-color" content="#0f3d2e" />
+    <meta name="msapplication-TileColor" content={siteConfig.themeColor} />
+    <meta name="theme-color" content={siteConfig.themeColor} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -48,7 +52,7 @@ const currentPath = Astro.url.pathname;
   <body>
     <header class="site-header">
       <nav class="site-nav" aria-label="Primary navigation">
-        <a class="brand" href="/" aria-label="Big Walk Wiki home">{siteConfig.name}</a>
+        <a class="brand" href="/" aria-label={`${siteConfig.name} home`}>{siteConfig.name}</a>
         <div class="nav-links">
           {
             mainNavigation.map((item) => (
@@ -66,7 +70,7 @@ const currentPath = Astro.url.pathname;
     <slot />
     <footer class="site-footer">
       <p>{siteConfig.description}</p>
-      <p>Independent fan-made guide site. Not affiliated with House House or Panic.</p>
+      <p>{siteConfig.disclaimer}</p>
     </footer>
   </body>
 </html>

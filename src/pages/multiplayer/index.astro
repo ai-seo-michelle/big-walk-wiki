@@ -1,128 +1,51 @@
 ---
 import { getEntry } from "astro:content";
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { multiplayerPage } from "../../data/multiplayer";
 
 const entry = await getEntry("pages", "multiplayer");
 
 if (!entry) {
   throw new Error("Missing multiplayer content entry.");
 }
-
-const verifiedPoints = [
-  "Big Walk supports cooperative multiplayer.",
-  "Official and platform sources describe an online co-op experience.",
-  "Available gameplay material shows teamwork and communication as important parts of play."
-];
-
-const multiplayerSteps = [
-  {
-    title: "Play Together With Friends",
-    text: "Use the multiplayer options available in the game to begin playing with other people. This page does not document exact menus until those details are verified."
-  },
-  {
-    title: "Play With Friends",
-    text: "Big Walk is presented as a cooperative adventure, so the experience is built around exploring and solving problems with other players."
-  },
-  {
-    title: "Explore Together",
-    text: "Move through the world as a team, share what you notice, and avoid treating discoveries as information only one player needs."
-  },
-  {
-    title: "Solve Challenges as a Team",
-    text: "When a puzzle or obstacle appears, discuss what each player can see and test ideas together before splitting up."
-  }
-];
-
-const featureCards = [
-  {
-    title: "Cooperative Exploration",
-    text: "Players can explore the world together, which makes navigation and discovery a shared activity."
-  },
-  {
-    title: "Team Communication",
-    text: "Gameplay footage and player explanations support that communication helps teams understand puzzles and routes."
-  },
-  {
-    title: "Shared Problem Solving",
-    text: "Some challenges are best approached by comparing observations and coordinating actions."
-  }
-];
-
-const tips = [
-  "Communicate before splitting up.",
-  "Stay coordinated during exploration.",
-  "Share discoveries with teammates.",
-  "Work together when solving puzzles."
-];
-
-const faqs = [
-  {
-    question: "Can you play Big Walk with friends?",
-    answer: "Yes. The available official and platform information confirms Big Walk as a cooperative multiplayer experience."
-  },
-  {
-    question: "How many players can play Big Walk?",
-    answer: "The site materials identify Big Walk as a 2-12 player cooperative game. Future updates should continue to verify this against official sources."
-  },
-  {
-    question: "Is cooperation required?",
-    answer: "Big Walk is designed around cooperative play, exploration, communication, and puzzle solving. This wiki does not claim that every activity requires multiple players."
-  },
-  {
-    question: "What multiplayer details are not confirmed here?",
-    answer: "Complete matchmaking details, exact friend invite steps, cross-platform multiplayer details, and dedicated server information are not included until verified."
-  }
-];
 ---
 
 <BaseLayout title={entry.data.title} description={entry.data.description} canonicalPath="/multiplayer/">
   <main class="page-shell guide-page">
     <section class="page-hero guide-hero" aria-labelledby="multiplayer-title">
       <div>
-        <p class="eyebrow">Big Walk Multiplayer Guide</p>
-        <h1 id="multiplayer-title">Big Walk Multiplayer</h1>
-        <p class="lede">
-          A clear guide to what is currently known about Big Walk co-op play,
-          teamwork, and playing with friends without adding unverified multiplayer details.
-        </p>
+        <p class="eyebrow">{multiplayerPage.hero.eyebrow}</p>
+        <h1 id="multiplayer-title">{multiplayerPage.hero.title}</h1>
+        <p class="lede">{multiplayerPage.hero.description}</p>
       </div>
 
-      <aside class="source-card" aria-label="Multiplayer source status">
-        <p class="eyebrow">Source Status</p>
-        <h2>Verified for This Page</h2>
+      <aside class="source-card" aria-label={multiplayerPage.source.ariaLabel}>
+        <p class="eyebrow">{multiplayerPage.source.eyebrow}</p>
+        <h2>{multiplayerPage.source.title}</h2>
         <ul>
-          {verifiedPoints.map((point) => <li>{point}</li>)}
+          {multiplayerPage.source.verifiedPoints.map((point) => <li>{point}</li>)}
         </ul>
       </aside>
     </section>
 
     <section class="guide-section" aria-labelledby="friends-overview">
       <div class="section-heading">
-        <p class="eyebrow">Overview</p>
-        <h2 id="friends-overview">Can You Play Big Walk With Friends?</h2>
+        <p class="eyebrow">{multiplayerPage.overview.eyebrow}</p>
+        <h2 id="friends-overview">{multiplayerPage.overview.title}</h2>
       </div>
       <div class="guide-panel">
-        <p>
-          Yes. Big Walk is described as a cooperative adventure experience where
-          players explore the world together. Teamwork is a central part of the
-          multiplayer experience.
-        </p>
-        <p>
-          This page focuses on verified high-level information: co-op play,
-          shared exploration, communication, and teamwork. It avoids unsupported
-          claims about matchmaking, invite menus, crossplay, or dedicated servers.
-        </p>
+        {multiplayerPage.overview.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
       </div>
     </section>
 
     <section class="guide-section" aria-labelledby="how-multiplayer-works">
       <div class="section-heading">
-        <p class="eyebrow">How It Works</p>
-        <h2 id="how-multiplayer-works">How Multiplayer Works</h2>
+        <p class="eyebrow">{multiplayerPage.howItWorks.eyebrow}</p>
+        <h2 id="how-multiplayer-works">{multiplayerPage.howItWorks.title}</h2>
       </div>
       <div class="step-list">
         {
-          multiplayerSteps.map((step, index) => (
+          multiplayerPage.howItWorks.steps.map((step, index) => (
             <article class="step-card">
               <span class="card-number">{index + 1}</span>
               <div>
@@ -137,16 +60,13 @@ const faqs = [
 
     <section class="guide-section two-column-section" aria-labelledby="cooperative-features">
       <div>
-        <p class="eyebrow">Co-op Features</p>
-        <h2 id="cooperative-features">Cooperative Features</h2>
-        <p class="section-copy">
-          Current sources support a multiplayer experience centered on exploration,
-          communication, and solving challenges together.
-        </p>
+        <p class="eyebrow">{multiplayerPage.features.eyebrow}</p>
+        <h2 id="cooperative-features">{multiplayerPage.features.title}</h2>
+        <p class="section-copy">{multiplayerPage.features.text}</p>
       </div>
       <div class="tip-grid">
         {
-          featureCards.map((feature) => (
+          multiplayerPage.features.items.map((feature) => (
             <article class="tip-card">
               <h3>{feature.title}</h3>
               <p>{feature.text}</p>
@@ -158,26 +78,23 @@ const faqs = [
 
     <section class="guide-section two-column-section" aria-labelledby="multiplayer-tips">
       <div>
-        <p class="eyebrow">Team Tips</p>
-        <h2 id="multiplayer-tips">Multiplayer Tips</h2>
-        <p class="section-copy">
-          These tips are general co-op habits based on the verified role of teamwork
-          in Big Walk, not claims about exact systems or hidden mechanics.
-        </p>
+        <p class="eyebrow">{multiplayerPage.tips.eyebrow}</p>
+        <h2 id="multiplayer-tips">{multiplayerPage.tips.title}</h2>
+        <p class="section-copy">{multiplayerPage.tips.text}</p>
       </div>
       <ul class="check-list">
-        {tips.map((tip) => <li>{tip}</li>)}
+        {multiplayerPage.tips.items.map((tip) => <li>{tip}</li>)}
       </ul>
     </section>
 
     <section class="guide-section" aria-labelledby="multiplayer-faq">
       <div class="section-heading">
-        <p class="eyebrow">FAQ</p>
-        <h2 id="multiplayer-faq">Frequently Asked Questions</h2>
+        <p class="eyebrow">{multiplayerPage.faq.eyebrow}</p>
+        <h2 id="multiplayer-faq">{multiplayerPage.faq.title}</h2>
       </div>
       <div class="step-list">
         {
-          faqs.map((faq) => (
+          multiplayerPage.faq.items.map((faq) => (
             <article class="step-card">
               <span class="card-number">?</span>
               <div>
@@ -192,14 +109,10 @@ const faqs = [
 
     <section class="guide-note" aria-labelledby="multiplayer-limitations">
       <div>
-        <p class="eyebrow">Wiki Note</p>
-        <h2 id="multiplayer-limitations">Details Still Needing Verification</h2>
+        <p class="eyebrow">{multiplayerPage.note.eyebrow}</p>
+        <h2 id="multiplayer-limitations">{multiplayerPage.note.title}</h2>
       </div>
-      <p>
-        Exact matchmaking rules, friend invite flow, cross-platform multiplayer,
-        and dedicated server information should be added only after official FAQ
-        updates, Steam information, or developer announcements confirm them.
-      </p>
+      <p>{multiplayerPage.note.text}</p>
     </section>
   </main>
 </BaseLayout>
